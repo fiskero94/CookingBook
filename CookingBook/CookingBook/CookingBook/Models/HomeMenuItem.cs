@@ -6,8 +6,8 @@ namespace CookingBook.Models
 {
     public enum MenuItemType
     {
-        Browse,
-        About
+        Recipes,
+        Leftovers
     }
     public class HomeMenuItem
     {

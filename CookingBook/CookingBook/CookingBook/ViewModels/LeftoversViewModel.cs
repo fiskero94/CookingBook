@@ -5,11 +5,11 @@ using Xamarin.Forms;
 
 namespace CookingBook.ViewModels
 {
-    public class AboutViewModel : BaseViewModel
+    public class LeftoversViewModel : BaseViewModel
     {
-        public AboutViewModel()
+        public LeftoversViewModel()
         {
-            Title = "About";
+            Title = "Leftovers";
             OpenWebCommand = new Command(async () => await Browser.OpenAsync("https://xamarin.com"));
         }
 

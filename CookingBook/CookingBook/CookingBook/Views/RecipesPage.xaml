@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="CookingBook.Views.ItemsPage"
+             x:Class="CookingBook.Views.RecipesPage"
              Title="{Binding Title}"
              x:Name="BrowseItemsPage">
 

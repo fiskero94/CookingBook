@@ -11,28 +11,28 @@ namespace CookingBook.Views
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
-    public partial class ItemDetailPage : ContentPage
+    public partial class RecipeDetailPage : ContentPage
     {
-        ItemDetailViewModel viewModel;
+        RecipeDetailViewModel viewModel;
 
-        public ItemDetailPage(ItemDetailViewModel viewModel)
+        public RecipeDetailPage(RecipeDetailViewModel viewModel)
         {
             InitializeComponent();
 
             BindingContext = this.viewModel = viewModel;
         }
 
-        public ItemDetailPage()
+        public RecipeDetailPage()
         {
             InitializeComponent();
 
-            var item = new Item
+            var item = new Recipe
             {
                 Text = "Item 1",
                 Description = "This is an item description."
             };
 
-            viewModel = new ItemDetailViewModel(item);
+            viewModel = new RecipeDetailViewModel(item);
             BindingContext = viewModel;
         }
     }

@@ -10,20 +10,20 @@ using CookingBook.Views;
 
 namespace CookingBook.ViewModels
 {
-    public class ItemsViewModel : BaseViewModel
+    public class RecipesViewModel : BaseViewModel
     {
-        public ObservableCollection<Item> Items { get; set; }
+        public ObservableCollection<Recipe> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
 
-        public ItemsViewModel()
+        public RecipesViewModel()
         {
-            Title = "Browse";
-            Items = new ObservableCollection<Item>();
+            Title = "Recipes";
+            Items = new ObservableCollection<Recipe>();
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            MessagingCenter.Subscribe<NewItemPage, Item>(this, "AddItem", async (obj, item) =>
+            MessagingCenter.Subscribe<AddRecipePage, Recipe>(this, "AddItem", async (obj, item) =>
             {
-                var newItem = item as Item;
+                var newItem = item as Recipe;
                 Items.Add(newItem);
                 await DataStore.AddItemAsync(newItem);
             });

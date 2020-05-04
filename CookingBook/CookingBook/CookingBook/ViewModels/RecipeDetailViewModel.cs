@@ -4,10 +4,10 @@ using CookingBook.Models;
 
 namespace CookingBook.ViewModels
 {
-    public class ItemDetailViewModel : BaseViewModel
+    public class RecipeDetailViewModel : BaseViewModel
     {
-        public Item Item { get; set; }
-        public ItemDetailViewModel(Item item = null)
+        public Recipe Item { get; set; }
+        public RecipeDetailViewModel(Recipe item = null)
         {
             Title = item?.Text;
             Item = item;
