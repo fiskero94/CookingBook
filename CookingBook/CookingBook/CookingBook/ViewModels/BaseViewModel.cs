@@ -6,14 +6,11 @@ using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 
 using CookingBook.Models;
-using CookingBook.Services;
 
 namespace CookingBook.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<Recipe> DataStore => DependencyService.Get<IDataStore<Recipe>>();
-
         bool isBusy = false;
         public bool IsBusy
         {

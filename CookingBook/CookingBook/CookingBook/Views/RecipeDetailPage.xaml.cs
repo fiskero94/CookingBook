@@ -28,8 +28,7 @@ namespace CookingBook.Views
 
             var item = new Recipe
             {
-                Text = "Item 1",
-                Description = "This is an item description."
+                Title = "Item 1"
             };
 
             viewModel = new RecipeDetailViewModel(item);
