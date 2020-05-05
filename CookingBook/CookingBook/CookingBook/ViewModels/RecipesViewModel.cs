@@ -25,7 +25,7 @@ namespace CookingBook.ViewModels
             {
                 var newItem = item as Recipe;
                 Items.Add(newItem);
-                await DataStore.AddItemAsync(newItem);
+                //await DataStore.AddItemAsync(newItem);
             });
         }
 
@@ -39,11 +39,11 @@ namespace CookingBook.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
-                foreach (var item in items)
-                {
-                    Items.Add(item);
-                }
+                //var items = await DataStore.GetItemsAsync(true);
+                //foreach (var item in items)
+                //{
+                //    Items.Add(item);
+               //}
             }
             catch (Exception ex)
             {

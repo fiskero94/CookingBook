@@ -9,8 +9,7 @@ namespace CookingBook.ViewModels
         public Recipe Item { get; set; }
         public RecipeDetailViewModel(Recipe item = null)
         {
-            Title = item?.Text;
-            Item = item;
+            //tbd
         }
     }
 }

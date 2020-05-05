@@ -1,7 +1,6 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using CookingBook.Services;
 using CookingBook.Views;
 
 namespace CookingBook
@@ -12,8 +11,6 @@ namespace CookingBook
         public App()
         {
             InitializeComponent();
-
-            DependencyService.Register<MockDataStore>();
             MainPage = new MainPage();
         }
 

@@ -21,8 +21,7 @@ namespace CookingBook.Views
 
             Item = new Recipe
             {
-                Text = "Item name",
-                Description = "This is an item description."
+              //something else
             };
 
             BindingContext = this;
