@@ -21,7 +21,7 @@ namespace CookingBook.Views
 
             Item = new Recipe
             {
-              //something else
+              //recipe fields
             };
 
             BindingContext = this;
