@@ -7,6 +7,9 @@ using Xamarin.Forms;
 
 using CookingBook.Models;
 using CookingBook.Views;
+using CookingBook.Controller;
+using System.Collections.Specialized;
+using System.Linq;
 
 namespace CookingBook.ViewModels
 {
@@ -14,11 +17,18 @@ namespace CookingBook.ViewModels
     {
         public ObservableCollection<Recipe> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
+        public RecipeController RecipeController { get; set; }
+        private int pageSize = 10;
+        private Label pageNumberLabel;
+        private int pageNumber = 1;
+        private double totalPages;
 
-        public RecipesViewModel()
+        public RecipesViewModel(Label PageNumberLabel)
         {
             Title = "Recipes";
             Items = new ObservableCollection<Recipe>();
+            RecipeController = new RecipeController();
+            pageNumberLabel = PageNumberLabel;
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
             MessagingCenter.Subscribe<AddRecipePage, Recipe>(this, "AddItem", async (obj, item) =>
@@ -33,17 +43,19 @@ namespace CookingBook.ViewModels
         {
             if (IsBusy)
                 return;
-
             IsBusy = true;
 
             try
             {
                 Items.Clear();
-                //var items = await DataStore.GetItemsAsync(true);
-                //foreach (var item in items)
-                //{
-                //    Items.Add(item);
-               //}
+                RecipeResults recipeResults = await RecipeController.GetRecipesAsync(pageSize, GetOffset());
+                foreach (var item in recipeResults.Recipes)
+                {
+                    Items.Add(item);
+                }
+                double totalPagesTemp = recipeResults.TotalResults / pageSize;
+                totalPages = Math.Ceiling(totalPagesTemp);
+                UpdatePageNumberLabel();
             }
             catch (Exception ex)
             {
@@ -52,6 +64,28 @@ namespace CookingBook.ViewModels
             finally
             {
                 IsBusy = false;
+            }
+        }
+
+        private int GetOffset() => (pageNumber - 1) * pageSize;
+
+        private void UpdatePageNumberLabel() => pageNumberLabel.Text = "Page " + pageNumber + " out of " + totalPages;
+
+        public async Task PageBackButton_ClickedAsync()
+        {
+            if(pageNumber > 1)
+            {
+                pageNumber--;
+                await ExecuteLoadItemsCommand();
+            }
+        }
+
+        public async Task PageNextButton_ClickedAsync()
+        {
+            if(pageNumber < totalPages)
+            {
+                pageNumber++;
+                await ExecuteLoadItemsCommand();
             }
         }
     }

@@ -24,5 +24,9 @@ namespace CookingBook.Models
                 return ids.TrimEnd(',');
             }
         }
+        [JsonProperty("totalResults")]
+        public int TotalResults { get; set; }
+
+        public List<Recipe> Recipes { get; set; }
     }
 }

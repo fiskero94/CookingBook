@@ -13,8 +13,6 @@ using CookingBook.ViewModels;
 
 namespace CookingBook.Views
 {
-    // Learn more about making custom code visible in the Xamarin.Forms previewer
-    // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
     public partial class RecipesPage : ContentPage
     {
@@ -24,7 +22,7 @@ namespace CookingBook.Views
         {
             InitializeComponent();
 
-            BindingContext = viewModel = new RecipesViewModel();
+            BindingContext = viewModel = new RecipesViewModel(PageNumberLabel);
         }
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
@@ -35,7 +33,6 @@ namespace CookingBook.Views
 
             await Navigation.PushAsync(new RecipeDetailPage(new RecipeDetailViewModel(item)));
 
-            // Manually deselect item.
             ItemsListView.SelectedItem = null;
         }
 
@@ -51,5 +48,8 @@ namespace CookingBook.Views
             if (viewModel.Items.Count == 0)
                 viewModel.LoadItemsCommand.Execute(null);
         }
+
+        private async void PageBackButton_ClickedAsync(object sender, EventArgs e) => await viewModel.PageBackButton_ClickedAsync();
+        private async void PageNextButton_ClickedAsync(object sender, EventArgs e) => await viewModel.PageNextButton_ClickedAsync();
     }
 }

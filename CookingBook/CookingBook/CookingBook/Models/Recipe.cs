@@ -37,7 +37,7 @@ namespace CookingBook.Models
         public bool DairyFree { get; set; }
         [JsonProperty("veryPopular")]
         public bool VeryPopular { get; set; }
-
         public int ReadyInMinutes => PreparationMinutes + CookingMinutes;
+        public string PreparationTimeToString => PreparationMinutes + " minutes";
     }
 }
