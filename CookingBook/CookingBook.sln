@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookingBook.Android", "Cook
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookingBook.iOS", "CookingBook\CookingBook.iOS\CookingBook.iOS.csproj", "{AAA23120-942C-450B-BD6D-BA734F9283DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookingBook", "CookingBook\CookingBook\CookingBook.csproj", "{37AD40A3-B25B-471D-B237-528E7AD629CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CookingBook", "CookingBook\CookingBook\CookingBook.csproj", "{37AD40A3-B25B-471D-B237-528E7AD629CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

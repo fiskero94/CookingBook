@@ -10,9 +10,6 @@ namespace CookingBook.ViewModels
         public LeftoversViewModel()
         {
             Title = "Leftovers";
-            OpenWebCommand = new Command(async () => await Browser.OpenAsync("https://xamarin.com"));
         }
-
-        public ICommand OpenWebCommand { get; }
     }
 }
