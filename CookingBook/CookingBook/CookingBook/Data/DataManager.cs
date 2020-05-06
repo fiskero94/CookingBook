@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 
-namespace CookingBook
+namespace CookingBook.Data
 {
     public class DataManager
     {
