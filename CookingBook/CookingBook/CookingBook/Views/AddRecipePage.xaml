@@ -13,11 +13,29 @@
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <StackLayout Spacing="20" Padding="15" Margin="16">
-            <Label Text="Title" FontSize="Medium" />
-            <Entry Text="{Binding Item.Text}" d:Text="Recipe title" FontSize="Small" />
-            <Label Text="Description" FontSize="Medium" />
-            <Editor Text="{Binding Item.Description}" d:Text="Item description" FontSize="Small" Margin="0" />
+        <ScrollView >
+            <StackLayout Spacing="20" Padding="15" Margin="16">
+            <Label Text="Title"/>
+            <Entry x:Name="title" Placeholder="Recipe Title" FontSize="Small" />
+            <Label Text="Summary"/>
+            <Editor x:Name="summary" Placeholder="Summary of the dish" FontSize="Small" Margin="0" />
+            <Label Text="Instructions"/>
+            <Editor x:Name="Instructions" Placeholder="Describe how you prepare the dish" FontSize="Small" Margin="0" />
+                <Grid>
+                    <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Text="Preparation time" Grid.Row="0"/>
+                <Entry x:Name="preparationtime" Placeholder="Preparation time (Minutes)" Grid.Row="1" Grid.Column="0" Keyboard="Numeric" FontSize="Small"/>
+                <Label Text="Cooking time" Grid.Row="0" Grid.Column="1"/>
+                <Entry x:Name="cookingtime" Placeholder="Cooking time (minutes)" Grid.Row="1" Grid.Column="1" Keyboard="Numeric" FontSize="Small"/>
+            </Grid>
 
             <Grid >
                 <Grid.RowDefinitions>
@@ -35,13 +53,13 @@
                 <StackLayout Grid.Row="1">
                     <FlexLayout  x:Name="Ingredients" Wrap="Wrap"/>
                 </StackLayout>
-                <Entry Grid.Row="2" x:Name="Entry" d:Text="Enter ingredient" FontSize="Small"></Entry>
+                <Entry Grid.Row="2" x:Name="ingredientsEntry" Placeholder="Enter ingredient" FontSize="Small"></Entry>
                 <StackLayout Grid.Row="3">
                     <FlexLayout x:Name="Suggestions" Wrap="Wrap"/>
                 </StackLayout>
             </Grid>
 
-            <Label Text="Extra stuff" FontSize="Medium"/>
+            <Label Text="Extra stuff"/>
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -56,16 +74,17 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Label Text="Vegan" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center"/>
-                <CheckBox x:Name="Vegan" Grid.Row="0" Grid.Column="1"/>
-                <Label Text="Vegan" Grid.Row="0" Grid.Column="2" VerticalTextAlignment="Center"/>
-                <CheckBox x:Name="Vegan" Grid.Row="0" Grid.Column="3"/>
-                <Label Text="Vegetarian" Grid.Row="0" Grid.Column="4" VerticalTextAlignment="Center"/>
-                <CheckBox x:Name="Vegetarian" Grid.Row="0" Grid.Column="5"/>
+                <CheckBox x:Name="vegan" Grid.Row="0" Grid.Column="1"/>
+                <Label Text="Gluten Free" Grid.Row="0" Grid.Column="2" VerticalTextAlignment="Center"/>
+                <CheckBox x:Name="gluten" Grid.Row="0" Grid.Column="3"/>
+                <Label Text="Dairy Free" Grid.Row="0" Grid.Column="4" VerticalTextAlignment="Center"/>
+                <CheckBox x:Name="dairy" Grid.Row="0" Grid.Column="5"/>
             </Grid>
 
-            <Label Text="Add image" FontSize="Medium"/>
-            <Button Text="Take picture"></Button>
+            <Label Text="Add image"/>
+            <Button Text="Take picture" IsEnabled="False"/>
 
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
