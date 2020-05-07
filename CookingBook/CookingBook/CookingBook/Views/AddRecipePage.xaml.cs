@@ -15,7 +15,7 @@ namespace CookingBook.Views
     [DesignTimeVisible(false)]
     public partial class AddRecipePage : ContentPage
     {
-        public Recipe Item { get; set; }
+        public Recipe Recipe { get; set; }
         private List<string> ingredients;
         private IngredientController ingredientController;
 
@@ -23,7 +23,7 @@ namespace CookingBook.Views
         {
             InitializeComponent();
 
-            Item = new Recipe { };
+            Recipe = new Recipe { };
             ingredientController = new IngredientController();
             ingredients = new List<string>();
             ingredientsEntry.TextChanged += IngredientsEntry_TextChangedAsync;
@@ -61,24 +61,24 @@ namespace CookingBook.Views
 
         async void Save_Clicked(object sender, EventArgs e)
         {
-            if (title.Text.Length < 0 ||
-                Instructions.Text.Length < 0 ||
-                summary.Text.Length < 0 ||
-                preparationtime.Text.Length < 0 ||
-                cookingtime.Text.Length < 0)
+            if (title.Text.Length > 0 &&
+                Instructions.Text.Length > 0 &&
+                summary.Text.Length > 0 &&
+                preparationtime.Text.Length > 0 &&
+                cookingtime.Text.Length > 0)
             {
-                Item.Title = title.Text;
-                Item.Instructions = Instructions.Text;
-                Item.Summary = summary.Text;
-                Item.Ingredients = ingredients;
-                Item.PreparationMinutes = Int32.Parse(preparationtime.Text);
-                Item.CookingMinutes = Int32.Parse(cookingtime.Text);
-                Item.CreditsText = "User";
-                Item.Vegan = vegan.IsChecked;
-                Item.GlutenFree = gluten.IsChecked;
-                Item.DairyFree = dairy.IsChecked;
+                Recipe.Title = title.Text;
+                Recipe.Instructions = Instructions.Text;
+                Recipe.Summary = summary.Text;
+                Recipe.Ingredients = ingredients;
+                Recipe.PreparationMinutes = Int32.Parse(preparationtime.Text);
+                Recipe.CookingMinutes = Int32.Parse(cookingtime.Text);
+                Recipe.CreditsText = "User";
+                Recipe.Vegan = vegan.IsChecked;
+                Recipe.GlutenFree = gluten.IsChecked;
+                Recipe.DairyFree = dairy.IsChecked;
 
-                MessagingCenter.Send(this, "AddItem", Item);
+                await App.Database.SaveRecipeAsync(Recipe);
                 await Navigation.PopModalAsync();
             }
             else
