@@ -6,6 +6,7 @@ using Xamarin.Forms.Xaml;
 
 using CookingBook.Models;
 using CookingBook.Controller;
+using System.Net.Http;
 
 namespace CookingBook.Views
 {
@@ -25,12 +26,12 @@ namespace CookingBook.Views
             Item = new Recipe { };
             ingredientController = new IngredientController();
             ingredients = new List<string>();
-            ingredientsEntry.TextChanged += ingredientsEntry_TextChangedAsync;
+            ingredientsEntry.TextChanged += IngredientsEntry_TextChangedAsync;
             BindingContext = this;
         }
 
         #region INGREDIENTS 
-        private async void ingredientsEntry_TextChangedAsync(object sender, TextChangedEventArgs e)
+        private async void IngredientsEntry_TextChangedAsync(object sender, TextChangedEventArgs e)
         {
             List<string> autocomplete = await ingredientController.AutocompleteIngredientSearchAsync(ingredientsEntry.Text, 10);
             Suggestions.Children.Clear();
@@ -60,19 +61,30 @@ namespace CookingBook.Views
 
         async void Save_Clicked(object sender, EventArgs e)
         {
-            Item.Title = title.Text;
-            Item.Instructions = Instructions.Text;
-            Item.Summary = summary.Text;
-            Item.Ingredients = ingredients;
-            Item.PreparationMinutes = Int32.Parse(preparationtime.Text);
-            Item.CookingMinutes = Int32.Parse(cookingtime.Text);
-            Item.CreditsText = "me";
-            Item.Vegan = vegan.IsChecked;
-            Item.GlutenFree = gluten.IsChecked;
-            Item.DairyFree = dairy.IsChecked;
+            if (title.Text.Length < 0 ||
+                Instructions.Text.Length < 0 ||
+                summary.Text.Length < 0 ||
+                preparationtime.Text.Length < 0 ||
+                cookingtime.Text.Length < 0)
+            {
+                Item.Title = title.Text;
+                Item.Instructions = Instructions.Text;
+                Item.Summary = summary.Text;
+                Item.Ingredients = ingredients;
+                Item.PreparationMinutes = Int32.Parse(preparationtime.Text);
+                Item.CookingMinutes = Int32.Parse(cookingtime.Text);
+                Item.CreditsText = "User";
+                Item.Vegan = vegan.IsChecked;
+                Item.GlutenFree = gluten.IsChecked;
+                Item.DairyFree = dairy.IsChecked;
 
-            MessagingCenter.Send(this, "AddItem", Item);
-            await Navigation.PopModalAsync();
+                MessagingCenter.Send(this, "AddItem", Item);
+                await Navigation.PopModalAsync();
+            }
+            else
+            {
+                await DisplayAlert("Error", "Please fill out all empty fields", "OK");
+            }
         }
 
         async void Cancel_Clicked(object sender, EventArgs e)
