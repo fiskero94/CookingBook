@@ -1,8 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using SQLite;
-using Xamarin.Forms;
 
 namespace CookingBook.Models
 {
@@ -39,6 +37,7 @@ namespace CookingBook.Models
         public bool DairyFree { get; set; }
         [JsonProperty("veryPopular")]
         public bool VeryPopular { get; set; }
+
         public int ReadyInMinutes => PreparationMinutes + CookingMinutes;
         public string PreparationTimeToString => PreparationMinutes + " minutes";
     }

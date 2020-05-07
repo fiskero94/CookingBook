@@ -1,7 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CookingBook.Models
 {
@@ -9,16 +6,31 @@ namespace CookingBook.Models
     {
         [JsonProperty("id")]
         public int Id { get; set; }
-
         [JsonProperty("usedIngredientCount")]
         public int UsedIngredientCount { get; set; }
-        
-        public Recipe Recipe { get; set; }
+        [JsonProperty("missedIngredientCount")]
+        public int MissedIngredientCount { get; set; }
 
-        public int IngredientCount => Recipe.Ingredients.Count;
+        public int TotalIngredientCount => UsedIngredientCount + MissedIngredientCount;
+        public double MatchPercentage => TotalIngredientCount > 0 ? (double)UsedIngredientCount / TotalIngredientCount * 100 : 0;
+        public string MatchPercentageText => string.Format("{{0:N2}%}", MatchPercentage);
 
-        public double MatchPercentage => UsedIngredientCount / IngredientCount * 100;
+        private Recipe _recipe;
+        public Recipe Recipe
+        {
+            get
+            {
+                return _recipe;
+            }
+            set
+            {
+                _recipe = value;
 
-        public string MatchPercentageText => MatchPercentage + "%";
+                if (value != null)
+                {
+                    Recipe.Ingredients.RemoveAll(i => i.Id == null);
+                }
+            }
+        }
     }
 }

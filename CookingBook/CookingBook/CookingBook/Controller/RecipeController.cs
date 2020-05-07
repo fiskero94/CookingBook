@@ -16,7 +16,7 @@ namespace CookingBook.Controller
             dataManager = new DataManager();
         }
 
-        public async System.Threading.Tasks.Task<RecipeResults> GetRecipesAsync(int number, int offset)
+        public async Task<RecipeResults> GetRecipesAsync(int number, int offset)
         {
             return await dataManager.GetRecipesAsync(number, offset);
         }
