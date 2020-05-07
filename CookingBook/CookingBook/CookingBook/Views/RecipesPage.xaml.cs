@@ -45,6 +45,8 @@ namespace CookingBook.Views
         {
             base.OnAppearing();
 
+            //insert sqlite
+            //listView.ItemsSource = await App.Database.GetRecipesAsync();
             if (viewModel.Items.Count == 0)
                 viewModel.LoadItemsCommand.Execute(null);
         }

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using SQLite;
 using Xamarin.Forms;
 
 namespace CookingBook.Models
@@ -8,6 +9,7 @@ namespace CookingBook.Models
     public class Recipe
     {
         [JsonProperty("id")]
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         [JsonProperty("title")]
         public string Title { get; set; }
