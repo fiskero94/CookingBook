@@ -1,7 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
 
 namespace CookingBook.Models
 {
@@ -9,24 +8,9 @@ namespace CookingBook.Models
     {
         [JsonProperty("results")]
         public List<RecipePreview> Results { get; set; }
-
-        public string Ids
-        {
-            get
-            {
-                string ids = string.Empty;
-
-                foreach (RecipePreview preview in Results)
-                {
-                    ids += preview.Id + ",";
-                }
-
-                return ids.TrimEnd(',');
-            }
-        }
         [JsonProperty("totalResults")]
         public int TotalResults { get; set; }
-
         public List<Recipe> Recipes { get; set; }
+        public string Ids => Results.Select(r => r.Id).Separate(',');
     }
 }
