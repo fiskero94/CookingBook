@@ -16,7 +16,7 @@ namespace CookingBook.Models
         [JsonProperty("servings")]
         public int Servings { get; set; }
         [JsonProperty("extendedIngredients")]
-        public List<string> Ingredients { get; set; }
+        public List<Ingredient> Ingredients { get; set; }
         [JsonProperty("preparationMinutes")]
         public int PreparationMinutes { get; set; }
         [JsonProperty("cookingMinutes")]

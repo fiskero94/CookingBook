@@ -61,6 +61,12 @@ namespace CookingBook.Data
             return matches;
         }
 
+        //public async Task<List<Ingredient>> SearchIngredientsAsync(List<string> ingredients)
+        //{
+        //    string ingredientString = IngredientsToCommaSeperatedString(ingredients);
+        //    HttpResponseMessage response = await Client.get
+        //}
+
         private string IngredientsToCommaSeperatedString(List<string> ingredients)
         {
             string ingredientsString = string.Empty;

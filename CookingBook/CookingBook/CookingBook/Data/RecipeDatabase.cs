@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace CookingBook.Data
 {
-    public class Database
+    public class RecipeDatabase
     {
         readonly SQLiteAsyncConnection _database;
 
-        public Database(string dbPath)
+        public RecipeDatabase(string dbPath)
         {
             _database = new SQLiteAsyncConnection(dbPath);
             _database.CreateTableAsync<Recipe>().Wait();

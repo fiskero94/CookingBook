@@ -9,15 +9,15 @@ namespace CookingBook
 {
     public partial class App : Application
     {
-        static Database database;
+        static RecipeDatabase database;
 
-        public static Database Database
+        public static RecipeDatabase Database
         {
             get
             {
                 if(database == null)
                 {
-                    database = new Database(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Recipes.db3"));
+                    database = new RecipeDatabase(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Recipes.db3"));
                 }
                 return database;
             }

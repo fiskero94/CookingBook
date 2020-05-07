@@ -7,6 +7,7 @@ using Xamarin.Forms.Xaml;
 using CookingBook.Models;
 using CookingBook.Controller;
 using System.Net.Http;
+using CookingBook.Data;
 
 namespace CookingBook.Views
 {
@@ -70,7 +71,8 @@ namespace CookingBook.Views
                 Recipe.Title = title.Text;
                 Recipe.Instructions = Instructions.Text;
                 Recipe.Summary = summary.Text;
-                Recipe.Ingredients = ingredients;
+                //sqlite kan ikke gemme en liste af ingredients hmm
+                //Recipe.Ingredients = ingredients;
                 Recipe.PreparationMinutes = Int32.Parse(preparationtime.Text);
                 Recipe.CookingMinutes = Int32.Parse(cookingtime.Text);
                 Recipe.CreditsText = "User";
