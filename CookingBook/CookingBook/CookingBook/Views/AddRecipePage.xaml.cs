@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-
 using CookingBook.Models;
 using CookingBook.Controller;
 using System.Net.Http;
 using CookingBook.Data;
+using System.Linq;
 
 namespace CookingBook.Views
 {
@@ -17,7 +17,7 @@ namespace CookingBook.Views
     public partial class AddRecipePage : ContentPage
     {
         public Recipe Recipe { get; set; }
-        private List<string> ingredients;
+        private List<Ingredient> ingredients;
         private IngredientController ingredientController;
 
         public AddRecipePage()
@@ -26,7 +26,7 @@ namespace CookingBook.Views
 
             Recipe = new Recipe { };
             ingredientController = new IngredientController();
-            ingredients = new List<string>();
+            ingredients = new List<Ingredient>();
             ingredientsEntry.TextChanged += IngredientsEntry_TextChangedAsync;
             BindingContext = this;
         }
@@ -43,22 +43,40 @@ namespace CookingBook.Views
                 Suggestions.Children.Add(button);
             }
         }
-        private void SuggestionButton_Clicked(object sender, EventArgs e)
+        private async void SuggestionButton_Clicked(object sender, EventArgs e)
         {
-            string suggestion = ((Button)sender).Text;
-            ingredients.Add(suggestion);
-            Button button = new Button { Text = suggestion };
-            button.Clicked += IngredientButton_Clicked;
-            Ingredients.Children.Add(button);
+            string a = await DisplayPromptAsync("Enter amount (In grams)", ((Button)sender).Text, "OK", "Cancel", keyboard: Keyboard.Numeric);
+            if(a != null)
+            {
+                double amount = Double.Parse(a);
+                string suggestion = ((Button)sender).Text;
+
+                Ingredient ingredient = new Ingredient() { Name = suggestion, Amount = amount };
+                ingredients.Add(ingredient);
+                Button button = new Button { Text = suggestion + " " + a + "g" };
+                button.Clicked += IngredientButton_Clicked;
+                Ingredients.Children.Add(button);
+            }
         }
 
         private void IngredientButton_Clicked(object sender, EventArgs e)
         {
             string ingredient = ((Button)sender).Text;
-            ingredients.Remove(ingredient);
+            Ingredient ing = ingredients.Where(x => x.Name == ingredient).FirstOrDefault();
+            ingredients.Remove(ing);
             Ingredients.Children.Remove((Button)sender);
         }
         #endregion
+
+        private async void CameraButton_Clicked(object sender, EventArgs e)
+        {           
+            var photo = await Plugin.Media.CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions() { });
+
+            if(photo != null)
+            {
+                PhotoImage.Source = ImageSource.FromStream(() => { return photo.GetStream(); });
+            }
+        }
 
         async void Save_Clicked(object sender, EventArgs e)
         {
@@ -66,21 +84,24 @@ namespace CookingBook.Views
                 Instructions.Text.Length > 0 &&
                 summary.Text.Length > 0 &&
                 preparationtime.Text.Length > 0 &&
-                cookingtime.Text.Length > 0)
+                cookingtime.Text.Length > 0 &&
+                ingredients.Count > 0)
             {
                 Recipe.Title = title.Text;
                 Recipe.Instructions = Instructions.Text;
                 Recipe.Summary = summary.Text;
-                //sqlite kan ikke gemme en liste af ingredients hmm
-                //Recipe.Ingredients = ingredients;
+                Recipe.Ingredients = ingredients;
                 Recipe.PreparationMinutes = Int32.Parse(preparationtime.Text);
                 Recipe.CookingMinutes = Int32.Parse(cookingtime.Text);
                 Recipe.CreditsText = "User";
                 Recipe.Vegan = vegan.IsChecked;
                 Recipe.GlutenFree = gluten.IsChecked;
                 Recipe.DairyFree = dairy.IsChecked;
+                Recipe.UserRecipe = true;
 
                 await App.Database.SaveRecipeAsync(Recipe);
+
+                MessagingCenter.Send(this, "AddRecipe", Recipe);
                 await Navigation.PopModalAsync();
             }
             else

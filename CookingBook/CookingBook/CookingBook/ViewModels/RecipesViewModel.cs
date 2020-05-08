@@ -10,6 +10,7 @@ using CookingBook.Views;
 using CookingBook.Controller;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace CookingBook.ViewModels
 {
@@ -31,11 +32,10 @@ namespace CookingBook.ViewModels
             pageNumberLabel = PageNumberLabel;
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            MessagingCenter.Subscribe<AddRecipePage, Recipe>(this, "AddItem", async (obj, item) =>
+            MessagingCenter.Subscribe<AddRecipePage, Recipe>(this, "AddRecipe", async (obj, item) =>
             {
-                var newItem = item as Recipe;
-                Items.Add(newItem);
-                //await DataStore.AddItemAsync(newItem);
+                var newRecipe = item as Recipe;
+                Items.Insert(0, newRecipe);
             });
         }
 
@@ -48,6 +48,13 @@ namespace CookingBook.ViewModels
             try
             {
                 Items.Clear();
+
+                List<Recipe> UserRecipes = await App.Database.GetAllRecipesAsync();
+                foreach (var item in UserRecipes)
+                {
+                    Items.Add(item);
+                }
+
                 RecipeResults recipeResults = await RecipeController.GetRecipesAsync(pageSize, GetOffset());
                 foreach (var item in recipeResults.Recipes)
                 {

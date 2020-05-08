@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using SQLite;
+using SQLiteNetExtensions;
+using SQLiteNetExtensions.Attributes;
 
 namespace CookingBook.Models
 {
@@ -14,6 +16,7 @@ namespace CookingBook.Models
         [JsonProperty("servings")]
         public int Servings { get; set; }
         [JsonProperty("extendedIngredients")]
+        [OneToMany]
         public List<Ingredient> Ingredients { get; set; }
         [JsonProperty("preparationMinutes")]
         public int PreparationMinutes { get; set; }
@@ -37,6 +40,8 @@ namespace CookingBook.Models
         public bool DairyFree { get; set; }
         [JsonProperty("veryPopular")]
         public bool VeryPopular { get; set; }
+        public bool UserRecipe { get; set; }
+        public string ReadyInMinutes => PreparationMinutes + CookingMinutes + " minutes";
 
         public int ReadyInMinutes => PreparationMinutes + CookingMinutes;
         public string PreparationMinutesText => PreparationMinutes + " minutes";
