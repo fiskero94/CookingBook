@@ -15,7 +15,7 @@ namespace CookingBook.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class LeftoversResultsPage : ContentPage
     {
-        private LeftoversResultsViewModel _viewModel;
+        private readonly LeftoversResultsViewModel _viewModel;
 
         public LeftoversResultsPage(List<string> ingredients)
         {

@@ -39,6 +39,8 @@ namespace CookingBook.Models
         public bool VeryPopular { get; set; }
 
         public int ReadyInMinutes => PreparationMinutes + CookingMinutes;
-        public string PreparationTimeToString => PreparationMinutes + " minutes";
+        public string PreparationMinutesText => PreparationMinutes + " minutes";
+        public string CookingMinutesText => CookingMinutes + " minutes";
+        public string ReadyInMinutesText => ReadyInMinutes + " minutes";
     }
 }
