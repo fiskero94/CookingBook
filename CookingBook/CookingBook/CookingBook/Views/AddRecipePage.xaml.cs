@@ -97,8 +97,11 @@ namespace CookingBook.Views
                 Recipe.Vegan = vegan.IsChecked;
                 Recipe.GlutenFree = gluten.IsChecked;
                 Recipe.DairyFree = dairy.IsChecked;
+                Recipe.UserRecipe = true;
 
                 await App.Database.SaveRecipeAsync(Recipe);
+
+                MessagingCenter.Send(this, "AddRecipe", Recipe);
                 await Navigation.PopModalAsync();
             }
             else
