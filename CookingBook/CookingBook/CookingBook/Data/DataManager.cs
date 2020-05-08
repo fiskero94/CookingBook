@@ -10,7 +10,7 @@ namespace CookingBook.Data
     public class DataManager
     {
         private HttpClient _client;
-        private static readonly string Key = "24d41fab91e74391b6acb1cee3c86983";
+        private static readonly string Key = "c527d279e53e4bb3b563f2f2284bb60b";
         private static readonly string BaseUrl = "https://api.spoonacular.com/";
 
         public DataManager()
@@ -33,10 +33,15 @@ namespace CookingBook.Data
 
         public async Task<List<RecipeMatch>> SearchRecipesByIngredientsAsync(List<string> ingredients, int number)
         {
-            List<RecipeMatch> matches = await Request<List<RecipeMatch>>("recipes/findByIngredients?ingredients=" + ingredients.Separate(',') + "number=" + number + "&apiKey=" + Key);
-            string ids = matches.Select(m => m.Id).Separate(',');
-            List<Recipe> recipes = await Request<List<Recipe>>("recipes/informationBulk?ids=" + ids + "&apiKey=" + Key);
-            matches.ForEach(m => m.Recipe = recipes.SingleOrDefault(r => r.Id == m.Id));
+            List<RecipeMatch> matches = await Request<List<RecipeMatch>>("recipes/findByIngredients?ingredients=" + ingredients.Separate(',') + "&number=" + number + "&apiKey=" + Key);
+
+            if (matches.Count > 0)
+            {
+                string ids = matches.Select(m => m.Id).Separate(',');
+                List<Recipe> recipes = await Request<List<Recipe>>("recipes/informationBulk?ids=" + ids + "&apiKey=" + Key);
+                matches.ForEach(m => m.Recipe = recipes.SingleOrDefault(r => r.Id == m.Id));
+            }
+
             return matches;
         }
 

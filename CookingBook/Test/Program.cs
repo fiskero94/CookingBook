@@ -13,11 +13,19 @@ namespace Test
         static async Task Main(string[] args)
         {
             DataManager manager = new DataManager();
-            RecipeResults results = await manager.GetRecipesAsync(10, 0);
+            //RecipeResults results = await manager.GetRecipesAsync(10, 0);
             
-            foreach (Recipe recipe in results.Recipes)
+            //foreach (Recipe recipe in results.Recipes)
+            //{
+            //    Console.WriteLine(recipe.Title);
+            //}
+
+            //Console.WriteLine();
+            List<RecipeMatch> matches = await manager.SearchRecipesByIngredientsAsync(new List<string> { "beef" }, 10);
+
+            foreach (RecipeMatch match in matches)
             {
-                Console.WriteLine(recipe.Title);
+                Console.WriteLine(match.Recipe.Title);
             }
 
             Console.ReadKey();
