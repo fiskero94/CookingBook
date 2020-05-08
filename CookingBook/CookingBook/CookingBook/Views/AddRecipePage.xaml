@@ -80,11 +80,16 @@
                 <Label Text="Dairy Free" Grid.Row="0" Grid.Column="4" VerticalTextAlignment="Center"/>
                 <CheckBox x:Name="dairy" Grid.Row="0" Grid.Column="5"/>
             </Grid>
-
-            <Label Text="Add image"/>
-            <Button Text="Take picture" IsEnabled="False"/>
-
-        </StackLayout>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label Text="Add image"/>
+                    <Image x:Name="PhotoImage" />
+                    <Button x:Name="CameraButton" Text="Take Photo" Grid.Row="1" Clicked="CameraButton_Clicked" />
+                </Grid>
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>
