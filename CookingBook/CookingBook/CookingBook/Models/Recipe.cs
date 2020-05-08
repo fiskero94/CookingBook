@@ -41,11 +41,10 @@ namespace CookingBook.Models
         [JsonProperty("veryPopular")]
         public bool VeryPopular { get; set; }
         public bool UserRecipe { get; set; }
-        public string ReadyInMinutes => PreparationMinutes + CookingMinutes + " minutes";
 
         public int ReadyInMinutes => PreparationMinutes + CookingMinutes;
+        public string ReadyInMinutesText => ReadyInMinutes + " minutes";
         public string PreparationMinutesText => PreparationMinutes + " minutes";
         public string CookingMinutesText => CookingMinutes + " minutes";
-        public string ReadyInMinutesText => ReadyInMinutes + " minutes";
     }
 }
