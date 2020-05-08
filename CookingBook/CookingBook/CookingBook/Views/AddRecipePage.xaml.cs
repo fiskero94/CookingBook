@@ -8,7 +8,6 @@ using CookingBook.Controller;
 using System.Net.Http;
 using CookingBook.Data;
 using System.Linq;
-using Android.Webkit;
 
 namespace CookingBook.Views
 {
@@ -70,8 +69,13 @@ namespace CookingBook.Views
         #endregion
 
         private async void CameraButton_Clicked(object sender, EventArgs e)
-        {
-            //var photo = await Plugin.Media.CrossMedia
+        {           
+            var photo = await Plugin.Media.CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions() { });
+
+            if(photo != null)
+            {
+                PhotoImage.Source = ImageSource.FromStream(() => { return photo.GetStream(); });
+            }
         }
 
         async void Save_Clicked(object sender, EventArgs e)
