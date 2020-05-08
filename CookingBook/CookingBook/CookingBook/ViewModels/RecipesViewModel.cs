@@ -35,7 +35,6 @@ namespace CookingBook.ViewModels
             {
                 var newItem = item as Recipe;
                 Items.Add(newItem);
-                //await DataStore.AddItemAsync(newItem);
             });
         }
 
