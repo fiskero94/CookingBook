@@ -28,7 +28,7 @@ namespace CookingBook.Views
 
         async void OnItemSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            var item = args.SelectedItem as Recipe;
+            Recipe item = args.SelectedItem as Recipe;
             if (item == null)
                 return;
 

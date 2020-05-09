@@ -9,7 +9,7 @@ namespace CookingBook.Data
 {
     public class DataManager
     {
-        private HttpClient _client;
+        private readonly HttpClient _client;
         private static readonly string Key = "c527d279e53e4bb3b563f2f2284bb60b";
         private static readonly string BaseUrl = "https://api.spoonacular.com/";
 
