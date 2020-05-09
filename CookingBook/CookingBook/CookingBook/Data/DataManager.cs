@@ -10,7 +10,7 @@ namespace CookingBook.Data
     public class DataManager
     {
         private HttpClient _client;
-        private static readonly string Key = "e083fa8230ce49adabf60e739d0f15ef";
+        private static readonly string Key = "c88d484f64714e51bcb8b7a993fcd570";
         private static readonly string BaseUrl = "https://api.spoonacular.com/";
 
         public DataManager()
@@ -38,6 +38,13 @@ namespace CookingBook.Data
             List<Recipe> recipes = await Request<List<Recipe>>("recipes/informationBulk?ids=" + ids + "&apiKey=" + Key);
             matches.ForEach(m => m.Recipe = recipes.SingleOrDefault(r => r.Id == m.Id));
             return matches;
+        }
+
+        public async Task<RecipeResults> SearchRecipesByNameAsync(int number, int offset, string query)
+        {
+            RecipeResults results = await Request<RecipeResults>("recipes/search?number=" + number + "&offset=" + offset + "&query=" + query + "&apiKey=" + Key);
+            results.Recipes = await Request<List<Recipe>>("recipes/informationBulk?ids=" + results.Ids + "&apiKey=" + Key);
+            return results;
         }
 
         public async Task<T> Request<T>(string query)

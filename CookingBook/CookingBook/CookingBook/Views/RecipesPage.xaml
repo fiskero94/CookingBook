@@ -10,6 +10,7 @@
              x:Name="BrowseItemsPage">
 
     <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Search" Clicked="ToolbarSearch_Clicked"/>
         <ToolbarItem Text="Add" Clicked="AddItem_Clicked" />
     </ContentPage.ToolbarItems>
 
@@ -20,12 +21,12 @@
     </ContentPage.Resources>
     
     <StackLayout>
+        <SearchBar x:Name="Searchbar" IsVisible="False" SearchButtonPressed="Searchbar_SearchButtonPressedAsync" TextChanged="Searchbar_TextChanged"/>
         <ListView x:Name="ItemsListView"
                 ItemsSource="{Binding Items}"
                 VerticalOptions="FillAndExpand"
                 HasUnevenRows="true"
                 RefreshCommand="{Binding LoadItemsCommand}"
-                IsPullToRefreshEnabled="true"
                 IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                 CachingStrategy="RecycleElement"
                 ItemSelected="OnItemSelected">

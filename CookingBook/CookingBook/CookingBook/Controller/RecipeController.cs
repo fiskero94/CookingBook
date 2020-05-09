@@ -21,6 +21,11 @@ namespace CookingBook.Controller
             return await dataManager.GetRecipesAsync(number, offset);
         }
 
+        public async Task<RecipeResults> SearchRecipesByNameAsync(int number, int offset, string query)
+        {
+            return await dataManager.SearchRecipesByNameAsync(number, offset, query);
+        }
+
         public async Task<List<RecipeMatch>> SearchRecipesByIngredientsAsync(List<string> ingredients, int number)
         {
             return await dataManager.SearchRecipesByIngredientsAsync(ingredients, number);
