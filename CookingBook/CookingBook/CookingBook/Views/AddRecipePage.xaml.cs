@@ -10,6 +10,8 @@ using CookingBook.Data;
 using System.Linq;
 using Android.Graphics;
 using Android.Hardware;
+using Plugin.Media.Abstractions;
+using System.IO;
 
 namespace CookingBook.Views
 {
@@ -21,6 +23,7 @@ namespace CookingBook.Views
         public Recipe Recipe { get; set; }
         private List<Ingredient> ingredients;
         private IngredientController ingredientController;
+        private MediaFile photo;
 
         public AddRecipePage()
         {
@@ -54,7 +57,7 @@ namespace CookingBook.Views
                 double amount = Double.Parse(a);
                 string suggestion = ((Button)sender).Text;
 
-                Ingredient ingredient = new Ingredient() { Name = suggestion, Amount = amount };
+                Ingredient ingredient = new Ingredient() { Name = suggestion, Amount = amount, Unit = "g" };
                 ingredients.Add(ingredient);
                 Button button = new Button { Text = suggestion + " " + a + "g" };
                 button.Clicked += IngredientButton_Clicked;
@@ -73,12 +76,10 @@ namespace CookingBook.Views
 
         private async void CameraButton_Clicked(object sender, EventArgs e)
         {
-            var photo = await Plugin.Media.CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions() { });
+            photo = await Plugin.Media.CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions() { });
 
             if (photo != null)
                 PhotoImage.Source = ImageSource.FromStream(() => { return photo.GetStream(); });
-
-            var p = PhotoImage;
         }
 
         async void Save_Clicked(object sender, EventArgs e)
@@ -101,7 +102,19 @@ namespace CookingBook.Views
                 Recipe.GlutenFree = gluten.IsChecked;
                 Recipe.DairyFree = dairy.IsChecked;
                 Recipe.UserRecipe = true;
-                
+
+                if (photo != null)
+                {
+                    byte[] imageBytes;
+                    imageBytes = CommonFunctions.ReadStream(photo.GetStream());
+                    var FileImage = new Image();
+                    FileImage.Source = ImageSource.FromStream(() => new MemoryStream(imageBytes));
+
+                    var path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Id.ToString());
+                    File.WriteAllBytes(path, imageBytes);
+                    Recipe.Image = path;
+                }                 
+
                 await App.Database.SaveRecipeAsync(Recipe);
 
                 MessagingCenter.Send(this, "AddRecipe", Recipe);
