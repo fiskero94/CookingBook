@@ -19,9 +19,9 @@ namespace CookingBook.ViewModels
         public ObservableCollection<Recipe> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
         public RecipeController RecipeController { get; set; }
-        private readonly int PageSize = 10;
-        private readonly Label PageNumberLabel;
-        private int PageNumber = 1;
+        private int PageSize = 10;
+        private Label PageNumberLabel;
+        public int PageNumber = 1;
         private double TotalPages;
         private string SearchQuery;
 
