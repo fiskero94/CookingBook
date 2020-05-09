@@ -19,20 +19,21 @@ namespace CookingBook.ViewModels
         public ObservableCollection<Recipe> Items { get; set; }
         public Command LoadItemsCommand { get; set; }
         public RecipeController RecipeController { get; set; }
-        private int pageSize = 10;
-        private Label pageNumberLabel;
-        private int pageNumber = 1;
-        private double totalPages;
+        private int PageSize = 10;
+        private Label PageNumberLabel;
+        private int PageNumber = 1;
+        private double TotalPages;
+        private string SearchQuery;
 
-        public RecipesViewModel(Label PageNumberLabel)
+        public RecipesViewModel(Label pageNumberLabel)
         {
             Title = "Recipes";
             Items = new ObservableCollection<Recipe>();
             RecipeController = new RecipeController();
-            pageNumberLabel = PageNumberLabel;
+            PageNumberLabel = pageNumberLabel;
             LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
-            MessagingCenter.Subscribe<AddRecipePage, Recipe>(this, "AddRecipe", async (obj, item) =>
+            MessagingCenter.Subscribe<AddRecipePage, Recipe>(this, "AddRecipe", (obj, item) =>
             {
                 var newRecipe = item as Recipe;
                 Items.Insert(0, newRecipe);
@@ -49,19 +50,90 @@ namespace CookingBook.ViewModels
             {
                 Items.Clear();
 
-                List<Recipe> UserRecipes = await App.Database.GetAllRecipesAsync();
-                foreach (var item in UserRecipes)
+                if(PageNumber == 1)
                 {
-                    Items.Add(item);
+                    List<Recipe> UserRecipes = await App.Database.GetAllRecipesAsync();
+                    foreach (var item in UserRecipes)
+                    {
+                        Items.Add(item);
+                    }
                 }
 
-                RecipeResults recipeResults = await RecipeController.GetRecipesAsync(pageSize, GetOffset());
+                RecipeResults recipeResults = await RecipeController.GetRecipesAsync(PageSize, GetOffset());
                 foreach (var item in recipeResults.Recipes)
                 {
                     Items.Add(item);
                 }
-                double totalPagesTemp = recipeResults.TotalResults / pageSize;
-                totalPages = Math.Ceiling(totalPagesTemp);
+                double totalPagesTemp = recipeResults.TotalResults / PageSize;
+                TotalPages = Math.Ceiling(totalPagesTemp);
+                UpdatePageNumberLabel();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                SearchQuery = null;
+                IsBusy = false;
+            }
+        }
+
+        public async Task PageBackButton_ClickedAsync()
+        {
+            if(PageNumber > 1)
+            {
+                PageNumber--;
+                await NavigatePage();
+            }
+        }
+
+        public async Task PageNextButton_ClickedAsync()
+        {
+            if(PageNumber < TotalPages)
+            {
+                PageNumber++;
+                await NavigatePage();
+            }
+        }
+
+        private async Task NavigatePage()
+        {
+            if (SearchQuery != null) await Searchbar_Search(SearchQuery);
+            else await ExecuteLoadItemsCommand();
+        }
+
+        public async Task Searchbar_Search(string query)
+        {
+            if(SearchQuery == null) PageNumber = 1;
+            SearchQuery = query;
+            if (IsBusy)
+                return;
+            IsBusy = true;
+
+            try
+            {
+                Items.Clear();
+
+                if(PageNumber == 1)
+                {
+                    List<Recipe> UserRecipes = await App.Database.GetAllRecipesAsync();
+                    foreach (var item in UserRecipes)
+                    {
+                        if(item.Title.ToUpper().Contains(SearchQuery.ToUpper()))
+                        {
+                            Items.Add(item);
+                        }
+                    }
+                }
+
+                RecipeResults recipeResults = await RecipeController.SearchRecipesByNameAsync(PageSize, GetOffset(), SearchQuery);
+                foreach (var item in recipeResults.Recipes)
+                {
+                    Items.Add(item);
+                }
+                double totalPagesTemp = recipeResults.TotalResults / PageSize;
+                TotalPages = Math.Ceiling(totalPagesTemp);
                 UpdatePageNumberLabel();
             }
             catch (Exception ex)
@@ -74,26 +146,12 @@ namespace CookingBook.ViewModels
             }
         }
 
-        private int GetOffset() => (pageNumber - 1) * pageSize;
-
-        private void UpdatePageNumberLabel() => pageNumberLabel.Text = "Page " + pageNumber + " out of " + totalPages;
-
-        public async Task PageBackButton_ClickedAsync()
+        public void ToolbarSearch_Clicked(SearchBar searchBar)
         {
-            if(pageNumber > 1)
-            {
-                pageNumber--;
-                await ExecuteLoadItemsCommand();
-            }
+            searchBar.IsVisible = !searchBar.IsVisible;
         }
 
-        public async Task PageNextButton_ClickedAsync()
-        {
-            if(pageNumber < totalPages)
-            {
-                pageNumber++;
-                await ExecuteLoadItemsCommand();
-            }
-        }
+        private int GetOffset() => (PageNumber - 1) * PageSize;
+        private void UpdatePageNumberLabel() => PageNumberLabel.Text = "Page " + PageNumber + " out of " + TotalPages;
     }
 }

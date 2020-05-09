@@ -18,6 +18,7 @@ namespace CookingBook.Views
     {
         RecipesViewModel viewModel;
 
+        private bool SearchingCheck = false;
         public RecipesPage()
         {
             InitializeComponent();
@@ -44,14 +45,26 @@ namespace CookingBook.Views
         protected override void OnAppearing()
         {
             base.OnAppearing();
-
-            //insert sqlite
-            //listView.ItemsSource = await App.Database.GetRecipesAsync();
             if (viewModel.Items.Count == 0)
                 viewModel.LoadItemsCommand.Execute(null);
         }
 
         private async void PageBackButton_ClickedAsync(object sender, EventArgs e) => await viewModel.PageBackButton_ClickedAsync();
         private async void PageNextButton_ClickedAsync(object sender, EventArgs e) => await viewModel.PageNextButton_ClickedAsync();
+        private void ToolbarSearch_Clicked(object sender, EventArgs e) => viewModel.ToolbarSearch_Clicked(Searchbar);
+        private async void Searchbar_SearchButtonPressedAsync(object sender, EventArgs e)
+        {
+            SearchingCheck = true;
+            await viewModel.Searchbar_Search(((SearchBar)sender).Text);
+        }
+
+        private void Searchbar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (((SearchBar)sender).Text == "" && SearchingCheck == true)
+            {
+                SearchingCheck = false;
+                viewModel.LoadItemsCommand.Execute(null);
+            }
+        }
     }
 }

@@ -45,6 +45,13 @@ namespace CookingBook.Data
             return matches;
         }
 
+        public async Task<RecipeResults> SearchRecipesByNameAsync(int number, int offset, string query)
+        {
+            RecipeResults results = await Request<RecipeResults>("recipes/search?number=" + number + "&offset=" + offset + "&query=" + query + "&apiKey=" + Key);
+            results.Recipes = await Request<List<Recipe>>("recipes/informationBulk?ids=" + results.Ids + "&apiKey=" + Key);
+            return results;
+        }
+
         public async Task<T> Request<T>(string query)
         {
             HttpResponseMessage response = await _client.GetAsync(BaseUrl + query);
