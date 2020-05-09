@@ -62,6 +62,7 @@ namespace CookingBook.Views
         {
             if (((SearchBar)sender).Text == "" && SearchingCheck == true)
             {
+                viewModel.PageNumber = 1;
                 SearchingCheck = false;
                 viewModel.LoadItemsCommand.Execute(null);
             }
