@@ -8,7 +8,8 @@ using CookingBook.Controller;
 using System.Net.Http;
 using CookingBook.Data;
 using System.Linq;
-using Android.Webkit;
+using Android.Graphics;
+using Android.Hardware;
 
 namespace CookingBook.Views
 {
@@ -31,6 +32,7 @@ namespace CookingBook.Views
             ingredientsEntry.TextChanged += IngredientsEntry_TextChangedAsync;
             BindingContext = this;
         }
+
 
         #region INGREDIENTS 
         private async void IngredientsEntry_TextChangedAsync(object sender, TextChangedEventArgs e)
@@ -71,7 +73,12 @@ namespace CookingBook.Views
 
         private async void CameraButton_Clicked(object sender, EventArgs e)
         {
-            //var photo = await Plugin.Media.CrossMedia
+            var photo = await Plugin.Media.CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions() { });
+
+            if (photo != null)
+                PhotoImage.Source = ImageSource.FromStream(() => { return photo.GetStream(); });
+
+            var p = PhotoImage;
         }
 
         async void Save_Clicked(object sender, EventArgs e)
@@ -89,12 +96,12 @@ namespace CookingBook.Views
                 Recipe.Ingredients = ingredients;
                 Recipe.PreparationMinutes = Int32.Parse(preparationtime.Text);
                 Recipe.CookingMinutes = Int32.Parse(cookingtime.Text);
-                Recipe.CreditsText = "User";
+                Recipe.CreditsText = "User";              
                 Recipe.Vegan = vegan.IsChecked;
                 Recipe.GlutenFree = gluten.IsChecked;
                 Recipe.DairyFree = dairy.IsChecked;
                 Recipe.UserRecipe = true;
-
+                
                 await App.Database.SaveRecipeAsync(Recipe);
 
                 MessagingCenter.Send(this, "AddRecipe", Recipe);

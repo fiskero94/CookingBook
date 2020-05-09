@@ -49,7 +49,7 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="40"/>
                                 </Grid.RowDefinitions>
-                                <Label Text="{Binding ReadyInMinutes}" LineBreakMode="TailTruncation" FontSize="12" Grid.Row="0"/>
+                                <Label Text="{Binding ReadyInMinutesText}" LineBreakMode="TailTruncation" FontSize="12" Grid.Row="0"/>
                                 <Label IsVisible="{Binding UserRecipe}" Text="Your Recipe" FontSize="12" Grid.Row="1" TextColor="#49c5ea"  VerticalOptions="End" HorizontalOptions="Start"/>
                             </Grid>
                             <Grid Grid.Row="1" Grid.Column="1" VerticalOptions="Center">
