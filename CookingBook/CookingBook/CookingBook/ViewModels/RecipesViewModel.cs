@@ -21,7 +21,7 @@ namespace CookingBook.ViewModels
         public RecipeController RecipeController { get; set; }
         private int PageSize = 10;
         private Label PageNumberLabel;
-        private int PageNumber = 1;
+        public int PageNumber = 1;
         private double TotalPages;
         private string SearchQuery;
 

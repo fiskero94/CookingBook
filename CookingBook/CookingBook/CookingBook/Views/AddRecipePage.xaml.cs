@@ -107,8 +107,10 @@ namespace CookingBook.Views
                 {
                     byte[] imageBytes;
                     imageBytes = CommonFunctions.ReadStream(photo.GetStream());
-                    var FileImage = new Image();
-                    FileImage.Source = ImageSource.FromStream(() => new MemoryStream(imageBytes));
+                    Image FileImage = new Image
+                    {
+                        Source = ImageSource.FromStream(() => new MemoryStream(imageBytes))
+                    };
 
                     var path = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), Id.ToString());
                     File.WriteAllBytes(path, imageBytes);
