@@ -99,7 +99,9 @@
       <Name>CookingBook</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\food.jpg" />
+  </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\XML\file_paths.xml">
       <SubType>Designer</SubType>
