@@ -19,7 +19,7 @@ namespace CookingBook.ViewModels
 
         public LeftoversResultsViewModel(List<string> ingredients)
         {
-            Title = "Leftovers Results";
+            Title = "Matches";
             RecipeController = new RecipeController();
             RecipeMatches = new ObservableCollection<RecipeMatch>();
             Ingredients = ingredients;

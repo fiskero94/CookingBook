@@ -32,7 +32,7 @@ namespace CookingBook.Views
             Suggestions.Children.Clear();
             foreach (string suggestion in autocomplete)
             {
-                Button button = new Button { Text = suggestion };
+                Button button = new Button { Text = suggestion, BackgroundColor = Color.FromHex("#5577AA"), TextColor = Color.White, Padding = 0, Margin = 4, FontSize = 11, HeightRequest = 32 };
                 button.Clicked += SuggestionButton_Clicked;
                 Suggestions.Children.Add(button);
             }
@@ -45,7 +45,7 @@ namespace CookingBook.Views
             if (!_ingredients.Contains(suggestion))
             {
                 _ingredients.Add(suggestion);
-                Button button = new Button { Text = suggestion };
+                Button button = new Button { Text = suggestion, BackgroundColor = Color.FromHex("#77AA55"), TextColor = Color.White, Padding = 0, Margin = 4, FontSize = 11, HeightRequest = 32 };
                 button.Clicked += IngredientButton_Clicked;
                 Ingredients.Children.Add(button);
             }

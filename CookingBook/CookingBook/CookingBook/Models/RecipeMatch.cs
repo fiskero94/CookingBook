@@ -11,7 +11,8 @@ namespace CookingBook.Models
         public int UsedIngredientCount { get; set; }
         [JsonProperty("missedIngredientCount")]
         public int MissedIngredientCount { get; set; }
-        public string MatchPercentageText { get; private set; } = "0%";
+        public string MatchPercentageText { get; private set; } = "0% match";
+        public string Subtext => MatchPercentageText + ", " + Recipe.ReadyInMinutesText;
 
         private Recipe _recipe;
         public Recipe Recipe
@@ -38,7 +39,7 @@ namespace CookingBook.Models
             
             if (total > 0)
             {
-                MatchPercentageText = Math.Round((double)UsedIngredientCount / total * 100, 0) + "%";
+                MatchPercentageText = Math.Round((double)UsedIngredientCount / total * 100, 0) + "% match";
                 // MatchPercentageText = "Hmm"; // string.Format("{{0:N2}%}", matchPercentage);
             }
             else

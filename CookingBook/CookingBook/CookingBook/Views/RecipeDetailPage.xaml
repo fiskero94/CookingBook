@@ -6,20 +6,24 @@
              mc:Ignorable="d"
              x:Class="CookingBook.Views.RecipeDetailPage"
              Title="{Binding Recipe.Title}">
-
-    <ScrollView>
+    <ScrollView BackgroundColor="#EEEEEE" Padding="8, 0, 8, 8">
         <StackLayout>
-            <Image Source="{Binding Recipe.Image}" Aspect="AspectFill" HeightRequest="150"/>
-            <StackLayout Padding="16, 8, 16, 8">
-                <Label Text="{Binding Recipe.Title}" FontSize="28" TextColor="Black"/>
-                <Label Text="{Binding ServingsReadyInMinutesText}"/>
-                <Label Text="{Binding CreditsText}" FontSize="11" Margin="0, 0, 0, 16"/>
-                <Label Text="{Binding SummaryText}" TextColor="#333333"/>
-                <!--<Label Text="Ingredients" TextColor="Black" Margin="0, 16, 0, 0"/>-->
-                <!--<Label Text="{Binding IngredientsText}" TextColor="#333333" Margin="0, 0, 0, 16"/>-->
-                <Label Text="{Binding Recipe.Instructions}" TextColor="#333333" />
-            </StackLayout>
+            <Frame BorderColor="#DDDDDD" Padding="8" CornerRadius="8" HasShadow="False">
+                <StackLayout>
+                    <Frame Margin="0, 0, 0, 0" Padding="0" CornerRadius="4" IsVisible="{Binding Recipe.HasImage}">
+                        <Image Source="{Binding Recipe.Image}" Aspect="AspectFill" HeightRequest="150"/>
+                    </Frame>
+                    <StackLayout Padding="8">
+                        <Label Text="{Binding Recipe.Title}" FontSize="28" TextColor="Black" d:Text="Title"/>
+                        <Label Text="{Binding ServingsReadyInMinutesText}" d:Text="Servings"/>
+                        <Label Text="{Binding CreditsText}" FontSize="11" Margin="0, 0, 0, 16" d:Text="Credits"/>
+                        <Label Text="{Binding SummaryText}" TextColor="#222222" d:Text="Summary" Margin="0, 0, 0, 16"/>
+                        <Label Text="Ingredients" TextColor="Black"  IsVisible="{Binding Recipe.HasIngredients}"/>
+                        <Label Text="{Binding IngredientsText}" TextColor="#333333" Margin="0, 0, 0, 16" IsVisible="{Binding Recipe.HasIngredients}" d:Text="500g beef"/>
+                        <Label Text="{Binding Recipe.Instructions}" TextColor="#222222" d:Text="Instructions"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
         </StackLayout>
     </ScrollView>
-
 </ContentPage>

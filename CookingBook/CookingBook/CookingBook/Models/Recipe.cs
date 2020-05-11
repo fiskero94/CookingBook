@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using SQLite;
-using SQLiteNetExtensions;
 using SQLiteNetExtensions.Attributes;
 
 namespace CookingBook.Models
@@ -42,6 +41,8 @@ namespace CookingBook.Models
         public bool VeryPopular { get; set; }
         public bool UserRecipe { get; set; }
 
+        public bool HasImage => !string.IsNullOrEmpty(Image);
+        public bool HasIngredients => Ingredients != null && Ingredients.Count > 0;
         public int ReadyInMinutes => PreparationMinutes + CookingMinutes;
         public string ReadyInMinutesText => ReadyInMinutes + " minutes";
         public string PreparationMinutesText => PreparationMinutes + " minutes";

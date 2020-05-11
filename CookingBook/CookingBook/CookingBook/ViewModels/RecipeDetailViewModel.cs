@@ -14,9 +14,12 @@ namespace CookingBook.ViewModels
             {
                 string ingredients = string.Empty;
 
-                foreach (Ingredient ingredient in Recipe.Ingredients)
+                if (Recipe.HasIngredients)
                 {
-                    ingredients += ingredient.Amount + " " + ingredient.Unit + " " + ingredient.Name + ", ";
+                    foreach (Ingredient ingredient in Recipe.Ingredients)
+                    {
+                        ingredients += ingredient.Amount + " " + ingredient.Unit + " " + ingredient.Name + ", ";
+                    }
                 }
 
                 return ingredients.TrimEnd(' ').TrimEnd(',');
