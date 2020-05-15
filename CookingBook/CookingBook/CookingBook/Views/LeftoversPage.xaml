@@ -36,7 +36,7 @@
                 <StackLayout Grid.Row="3">
                     <FlexLayout x:Name="Suggestions" Wrap="Wrap"/>
                 </StackLayout>
-                <Button Grid.Row="4" x:Name="SearchButton" Text="Search" BackgroundColor="#77AA55" TextColor="White"></Button>
+                <Button Grid.Row="4" x:Name="SearchButton" Text="Search" BackgroundColor="#77AA55" TextColor="White"/>
             </Grid>
         </Frame>
     </StackLayout>
