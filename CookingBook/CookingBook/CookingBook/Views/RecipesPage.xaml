@@ -7,7 +7,8 @@
              mc:Ignorable="d"
              x:Class="CookingBook.Views.RecipesPage"
              Title="{Binding Title}"
-             x:Name="BrowseItemsPage">
+             x:Name="BrowseItemsPage"
+             BackgroundColor="#EEEEEE">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Search" Clicked="ToolbarSearch_Clicked"/>
@@ -33,41 +34,43 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Grid Padding="5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition Height="80"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="140"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Text="{Binding Title}" LineBreakMode="TailTruncation" FontSize="15" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
-                            <Grid Grid.Row="1" Grid.Column="0">
+                        <Frame BorderColor="#DDDDDD" Padding="8" CornerRadius="8" HasShadow="False">
+                            <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="40"/>
-                                </Grid.RowDefinitions>
-                                <Label Text="{Binding ReadyInMinutesText}" LineBreakMode="TailTruncation" FontSize="12" Grid.Row="0"/>
-                                <Label IsVisible="{Binding UserRecipe}" Text="Your Recipe" FontSize="12" Grid.Row="1" TextColor="#49c5ea"  VerticalOptions="End" HorizontalOptions="Start"/>
-                            </Grid>
-                            <Grid Grid.Row="1" Grid.Column="1" VerticalOptions="Center">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="20"/>
-                                    <RowDefinition Height="20"/>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="80"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="60"/>
-                                    <ColumnDefinition Width="60"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="140"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Text="Dairy-Free" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="10" Grid.Column="0" Grid.Row="0" BackgroundColor="{Binding DairyFree, Converter={StaticResource TagColorConverter}}"/>
-                                <Label Text="Vegan" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="10" Grid.Column="1" Grid.Row="0" BackgroundColor="{Binding Vegan, Converter={StaticResource TagColorConverter}}"/>
-                                <Label Text="Gluten-Free" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="10" Grid.Column="0" Grid.Row="1" BackgroundColor="{Binding GlutenFree, Converter={StaticResource TagColorConverter}}"/>
-                                <Label Text="Popular" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="10" Grid.Column="1" Grid.Row="1" BackgroundColor="{Binding VeryPopular, Converter={StaticResource TagColorConverter}}"/>
+                                <Label Text="{Binding Title}" LineBreakMode="TailTruncation" FontSize="15" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" FontAttributes="Bold" TextColor="#222222"/>
+                                <Grid Grid.Row="1" Grid.Column="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="40"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Text="{Binding ReadyInMinutesText}" LineBreakMode="TailTruncation" FontSize="12" Grid.Row="0" TextColor="#222222"/>
+                                    <Label IsVisible="{Binding UserRecipe}" Text="Your Recipe" FontSize="12" Grid.Row="1" TextColor="#49c5ea"  VerticalOptions="End" HorizontalOptions="Start"/>
+                                </Grid>
+                                <Grid Grid.Row="1" Grid.Column="1" VerticalOptions="Center">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="20"/>
+                                        <RowDefinition Height="20"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition Width="60"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="Dairy-Free" TextColor="#222222" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="10" Grid.Column="0" Grid.Row="0" BackgroundColor="{Binding DairyFree, Converter={StaticResource TagColorConverter}}"/>
+                                    <Label Text="Vegan" TextColor="#222222" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="10" Grid.Column="1" Grid.Row="0" BackgroundColor="{Binding Vegan, Converter={StaticResource TagColorConverter}}"/>
+                                    <Label Text="Gluten-Free" TextColor="#222222" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="10" Grid.Column="0" Grid.Row="1" BackgroundColor="{Binding GlutenFree, Converter={StaticResource TagColorConverter}}"/>
+                                    <Label Text="Popular" TextColor="#222222" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="10" Grid.Column="1" Grid.Row="1" BackgroundColor="{Binding VeryPopular, Converter={StaticResource TagColorConverter}}"/>
+                                </Grid>
+                                <Image Source="{Binding Image}" Grid.Row="1" Grid.Column="2" Aspect="AspectFill"/>
                             </Grid>
-                            <Image Source="{Binding Image}" Grid.Row="1" Grid.Column="2" Aspect="AspectFill"/>
-                        </Grid>
+                        </Frame>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
