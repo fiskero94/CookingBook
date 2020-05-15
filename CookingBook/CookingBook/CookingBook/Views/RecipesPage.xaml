@@ -35,7 +35,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Frame BorderColor="#DDDDDD" Padding="8" CornerRadius="8" HasShadow="False">
+                        <Frame BorderColor="#DDDDDD" Padding="0" Margin="0, 0, 0, 4" CornerRadius="4" HasShadow="False">
                             <Grid Margin="16">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
