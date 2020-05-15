@@ -8,7 +8,8 @@
              x:Class="CookingBook.Views.RecipesPage"
              Title="{Binding Title}"
              x:Name="BrowseItemsPage"
-             BackgroundColor="#EEEEEE">
+             BackgroundColor="#EEEEEE"
+             Padding="8, 0, 8, 8">
 
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Search" Clicked="ToolbarSearch_Clicked"/>
@@ -35,7 +36,7 @@
                 <DataTemplate>
                     <ViewCell>
                         <Frame BorderColor="#DDDDDD" Padding="8" CornerRadius="8" HasShadow="False">
-                            <Grid>
+                            <Grid Margin="16">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition Height="80"/>
