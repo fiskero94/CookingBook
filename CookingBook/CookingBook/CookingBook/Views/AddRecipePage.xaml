@@ -61,7 +61,6 @@
                         </StackLayout>
                     </Grid>
 
-
                     <Label Text="Extra stuff" TextColor="#222222"/>
                     <Grid>
                         <Grid.RowDefinitions>
